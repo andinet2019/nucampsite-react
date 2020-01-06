@@ -1,33 +1,75 @@
-import React,{Component} from "react";
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import React, { Component } from 'react';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap'
+
 
 class CampsiteInfo extends Component {
-    
+    constructor(props){
+       super(props)
+       this.state={}
+    }
+    //Add a method to show  campsite
+   
     renderCampsite(campsite){
-return(<div className="col-md-5 m-5">
-    <Card>
-                    <CardImg top src={this.props.campsite.image} alt={this.props.campsite.name} />
-                    <CardBody>
-                        <CardTitle>{this.props.campsite.name}</CardTitle>
-                        <CardText>{this.props.campsite.description}</CardText>
-                    </CardBody>
-                </Card>
-               
-    
-    </div>)
-    
-}
+        
+   
+        return(
+            <div className="col-md-5 m-1">
+                 <Card>
+                            <CardImg top src={campsite.image} alt={campsite.name}/>
+                            <CardBody>
+                                <CardTitle>{campsite.name}</CardTitle>
+                                <CardText>{campsite.description}</CardText>
+                            </CardBody>
+                    </Card>
+            </div>
+        )
+       
+    }
 
 
+    // method for the  comments
+    renderComments(comments){
+        if(comments){
+            return(
+                <div className="col-md-5 m-1">
+                    {<h4> Comments </h4> }
+                      {
+                        comments.map(comments => <div key={comments.id}>{comments.text}<br/>  ---- {comments.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comments.date)))}</div>)
+                        
+                        }
+
+
+
+
+
+
+
+
+
+
+
+                      
+                        
+                </div>
+            )
+        }
+        return <div/>
+    }
 
     render(){
         if(this.props.campsite){
-        return(<div className="row">{this.renderCampsite()}</div>);
-
+                return(
+                    <div className="row">
+                      {/* render campsite method  is called here */}
+                        {this.renderCampsite(this.props.campsite)};
+                        {this.renderComments(this.props.campsite.comments)};
+                     </div>
+                     )  
         }
-        return <div/>;
-
+        return <div/>
     }
+
 }
+
 
 export default CampsiteInfo;
